@@ -1,7 +1,7 @@
 //besto gameo
 
-// 1= path
-//2 = grass
+// 1= grass
+//2 = path
 //3 = tree
 int map[][] = {  
                {3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3},
@@ -133,7 +133,7 @@ void setup()
 
   void keyPressed()
   {
-    if(key== 'w' && playerY >= 1)
+    if(key== 'w' && playerY >= 0)
     {
       playerY--;
     }
@@ -141,7 +141,7 @@ void setup()
     {
       //playerY++;
     }
-    if(key== 'a' && playerX >= 1)
+    if(key== 'a' && playerX >= 0)
     {
       playerX--;
     }
@@ -176,12 +176,12 @@ void draw()
       fill(0,100,0);
       square(i*50,j*50,50);
       }
-      else if(map[j+playerY][i+playerX] == 2)
+      else if(map[j+playerY][i+playerX] == 1)
       {
       fill(0,300,0);
       square(i*50,j*50,50);
       }
-      else if(map[j+playerY][i+playerX] == 1)
+      else if(map[j+playerY][i+playerX] == 2)
       {
       fill(186,164,67);
       square(i*50,j*50,50);
