@@ -120,19 +120,19 @@ void setup()
 
   void keyPressed()
   {
-    if(key== 'w' && mapY >= 1)
+    if(key== 'w' && mapY >= 1 &&  map[playerY - 1][ playerX] != 3)
     {
       mapY--;
     }
-    if(key== 's'&& mapY != 100)
+    if(key== 's'&& mapY != 100 && map[playerY + 1][ playerX] != 3)
     {
       mapY++;
     }
-    if(key== 'a' && mapX >= 1)
+    if(key== 'a' && mapX >= 1 && map[playerY][ playerX - 1] != 3)
     {
       mapX--;
     }
-    if(key== 'd' && mapX != 100)
+    if(key== 'd' && mapX != 100 && map[playerY][ playerX + 1] != 3)
     {
       mapX++;
     }
