@@ -177,6 +177,8 @@ void draw()
       {
       fill(300,0,0);
       square(i*50,j*50,50);
+      playerX = mapX +4;
+      playerY = mapY +4;
       }
       
       
