@@ -4,6 +4,8 @@
 
 class routes_Map
 {
+int map[][];
+
 
   public int[][] returnRoute(int currentMap)
   {
