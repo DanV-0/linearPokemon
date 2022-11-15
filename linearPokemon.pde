@@ -9,7 +9,7 @@ int mapX = 0;
 int mapY = 0;
 int playerX = 0;
 int playerY = 0;
-int currentMap = 0;
+int currentMap = 1;
 routes_Map map = new routes_Map();
 //int map[][] = routes_Map.returnRoute(currentMap).returnedMap ;
 
@@ -41,7 +41,7 @@ void setup()
     }
     println("mapY " + mapY);
     println("mapX " + mapX);
-    println();
+    println("current route " + currentMap);
     
   }
 
@@ -54,11 +54,11 @@ void draw()
   {
     for (int i = 0; i < 10; i++)
     {
-      noStroke();
+      //noStroke();
       
-      if(i+mapX >= 100 || j+mapY >= 100|| i+mapX <= 0 || j+mapY <= 0)
+      if(i+mapX >= map.returnRoute( currentMap)[1].length || j+mapY >= map.returnRoute( currentMap).length|| i+mapX < 0 || j+mapY < 0)
       {
-      fill(0,100,0);
+      fill(100,200,100);
       square(i*50,j*50,50);
       }
       else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 3)
@@ -77,11 +77,16 @@ void draw()
       fill(186,164,67);
       square(i*50,j*50,50);
       }
-      else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4)
+      else if(map.returnRoute( currentMap)[playerY][playerX] == 4)
       {
       fill(186,164,67);
       square(i*50,j*50,50);
-      currentMap = 0;
+      //currentMap ++;
+     // if(currentMap == 0)
+     // {
+      //mapX  = 6;
+      //mapY = 12;
+      //}
       
       }
       if(i == 4 && j == 4)
