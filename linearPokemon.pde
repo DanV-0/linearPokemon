@@ -4,7 +4,7 @@
 //2 = path
 //3 = tree
 
-
+PImage photo;
 int mapX = 0;
 int mapY = 0;
 int playerX = 0;
@@ -14,7 +14,10 @@ routes_Map map = new routes_Map();
 //int map[][] = routes_Map.returnRoute(currentMap).returnedMap ;
 
 void setup()
-{
+{ 
+  photo = loadImage("Player-123#.png");
+  //imageMode(CENTER); 
+  parseFile(); 
   //size(500, 500);
  fullScreen();
  
@@ -96,6 +99,7 @@ void draw()
       //rect(i*(((height+width)/2)/10),j*(((height+width)/2)/10),(width/10),(((height+width)/2)/10));
       playerX = mapX +5;
       playerY = mapY +4;
+      image(photo,i*(((height+width)/2)/20),j*(((height+width)/2)/20),(width/20),(((height+width)/2)/20));
       }
       
       
