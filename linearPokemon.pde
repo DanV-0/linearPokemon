@@ -22,8 +22,7 @@ void setup()
  fullScreen();
  
 }
-
-
+  
   void keyPressed()
   {
     if(key== 'w'   &&  playerY > 0 &&  map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && millis() % 5 == 0)
@@ -50,7 +49,10 @@ void setup()
 
 void draw() 
 {
-  
+  try
+  {
+    photo = loadImage("Player-123#.png");
+
 
 //186,164,67
   for (int j = 0; j < 20; j++)
@@ -101,9 +103,11 @@ void draw()
       playerY = mapY +4;
       image(photo,i*(((height+width)/2)/20),j*(((height+width)/2)/20),(width/20),(((height+width)/2)/20));
       }
-      
-      
-
     }
-   }
   }
+    }
+    catch(Exception e) 
+    { drawChar();}
+
+  
+   }
