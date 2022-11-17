@@ -120,12 +120,7 @@ String parseFile()
 } 
 
 
-void mousePressed()
-{
-  press=true;
-  mXPos1=mouseX;
-  mYPos1=mouseY;
-}
+
 void mouseReleased()
 {
   press=false;

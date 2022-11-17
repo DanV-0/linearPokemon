@@ -1,7 +1,7 @@
 //battlemode currently very under developed
-boolean pokemonEncounter = true;
-int boxSizeX = 140;//size
-int boxSizeY = 50;
+boolean pokemonEncounter = false;
+int boxSizeX = 280;//size
+int boxSizeY = 100;
 //box 1 coords
 int box1X = 340;
 int box1Y = 440;
@@ -17,7 +17,7 @@ int box4Y = box1Y - 60;
 //textbox
 int textBoxX = box4X - 185;
 int textBoxY = box4Y;
-int textBoxS = 180;
+int textBoxS = 100;
 //int textBoxS = 0;
 //testing things for boxes
 boolean runClicked = false;
@@ -36,10 +36,18 @@ void drawBattle()
   rect(textBoxX,textBoxY,textBoxS,textBoxS - 10);
 }
 
+void pokemonBag()
+{
+ background(0,0,255);
+ 
+}
 //makes the buttons work
-/*
- mousePressed()
+
+ void mousePressed()
  {
+   press=true;
+   mXPos1=mouseX;
+   mYPos1=mouseY;
    if(pokemonEncounter == true)
    {
      if(mouseX <= box1X && mouseY <= box1Y)
@@ -50,7 +58,7 @@ void drawBattle()
    }
    
  }
- */
+ 
    /*
   if(mousePressed == true && mouseX <= box1X && mouseY <= box1Y) 
   {
