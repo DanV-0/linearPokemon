@@ -58,42 +58,41 @@ void draw()
 
 //draws the map by pulling the integers from the array
     //186,164,67
-    for (int j = 0; j < 15; j++)
+    for (int j = 0; j < 10; j++)
     {
-      for (int i = 0; i < 17; i++)
+      for (int i = 0; i < 11; i++)
       {
         noStroke();
 
         if (i+mapX >= map.returnRoute( currentMap)[1].length || j+mapY >= map.returnRoute( currentMap).length|| i+mapX < 0 || j+mapY < 0)
         {
           fill(0, 100, 0);
-          rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         }
         else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 1)
         {
           fill(100, 200, 100);
-          rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
         else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
         {
           fill(100, 300, 100);
-          rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
         else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 2)
         {
           fill(186, 164, 67);
-          rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 3)
         {
           fill(0, 100, 0);
           rect(
-          i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
         else if (map.returnRoute( currentMap)[playerY][playerX] == 4)
         {
           fill(300);
-          rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
-          currentMap ++;
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
           if (currentMap == 1)
           {
             mapX  = 0;
@@ -103,18 +102,18 @@ void draw()
         else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4)
         {
         fill(300);
-        rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+        rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         }
         
         
         if (i == 5 && j == 4)
         {
           fill(300, 0, 0);
-          rect(i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
           //rect(i*(((height+width)/2)/10),j*(((height+width)/2)/10),(width/10),(((height+width)/2)/10));
           playerX = mapX +5;
           playerY = mapY +4;
-          image(photo, i*(((height+width)/2)/15), j*(((height+width)/2)/15), (width/15), (((height+width)/2)/15));
+          image(photo, i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         }
       }
     }
