@@ -15,6 +15,7 @@ routes_Map map = new routes_Map();
 
 void setup()
 { 
+  //frameRate(30);
   photo = loadImage("Player-123#.png");
   //imageMode(CENTER); 
   parseFile(); 
@@ -41,6 +42,22 @@ void setup()
     {
       mapX++;
     }
+    if(key == 'r')
+    {
+      if(!pokemonEncounter)
+      {
+       pokemonEncounter = true; 
+      }
+    }
+    /*
+    if(key == 'f')
+    {
+      if(pokemonEncounter)
+      {
+        pokemonEncounter = false;
+      }
+    }
+    */
     println("mapY " + mapY);
     println("mapX " + mapX);
     println("current route " + currentMap);
@@ -108,6 +125,11 @@ void draw()
     }
     catch(Exception e) 
     { drawChar();}
-
-  
+    //draws the battlemode when a pokemon is encountered currently bound to the 'R' key 
+    if(pokemonEncounter)
+    {
+     drawBattle(); 
+    }
+    //For the boxes in battle mode to keep the bag right
+    //drawPokemonBag();
    }
