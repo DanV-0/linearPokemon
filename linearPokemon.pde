@@ -12,6 +12,7 @@ int playerY = 0;
 int currentMap = 0;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
+int nxtRoute;
 
 
 void setup()
@@ -45,6 +46,8 @@ void keyPressed()
     mapX++;
     timingMillis = millis();
   }
+  
+  
   println("mapY " + mapY);
   println("mapX " + mapX);
   println("current route " + currentMap);
@@ -89,21 +92,18 @@ void draw()
           rect(
           i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
-        else if (map.returnRoute( currentMap)[playerY][playerX] == 4)
+        else 
         {
           fill(300);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+          nxtRoute = map.returnRoute( currentMap)[j+mapY][i+mapX];
           if (currentMap == 1)
           {
             mapX  = 0;
             mapY = 12;
           }
         }
-        else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4)
-        {
-        fill(300);
-        rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        }
+
         
         
         if (i == 5 && j == 4)
@@ -130,4 +130,27 @@ boolean moveSpeed(int lastMove)
     return true;
   else
     return false;
+}
+
+int changeMap()
+{
+if(currentMap == 1)
+  {
+  return 2;
+  }
+ if(currentMap == 2)
+ {
+   if(nxtRoute == 6)
+     return 1;
+   else if(nxtRoute == 7)
+    return 0; // need to make the route you get for going this way 
+    
+    else
+      return 0;
+ }
+  
+  else
+  {
+  return 0;
+  }
 }
