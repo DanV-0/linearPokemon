@@ -5,7 +5,7 @@ import java.nio.file.Path;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-
+// this scares me
 boolean Starting=true;
 String textBuffer = "";
 String name="";
