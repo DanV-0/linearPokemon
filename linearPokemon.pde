@@ -9,7 +9,7 @@ int mapX = 0;
 int mapY = 0;
 int playerX = 0;
 int playerY = 0;
-int currentMap = 0;
+int currentMap = 1;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
 int nxtRoute;
@@ -92,15 +92,21 @@ void draw()
           rect(
           i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
-        else 
+        else if(map.returnRoute( currentMap)[playerY][playerX] > 5 || map.returnRoute( currentMap)[playerY][playerX] == 4)
         {
           fill(300);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-          nxtRoute = map.returnRoute( currentMap)[j+mapY][i+mapX];
+          nxtRoute = map.returnRoute( currentMap)[j+playerY][i+playerX];
+          currentMap = changeMap();
           if (currentMap == 1)
           {
             mapX  = 0;
             mapY = 12;
+          }
+           if (currentMap == 2)
+          {
+            mapX  = 0;
+            mapY = 5;
           }
         }
 
