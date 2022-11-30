@@ -1,7 +1,10 @@
 //Cosmetics for boxes such as text needs to be in place
 //in the future unload map and load battle mode to get more performance if thats even possible
 //battlemode currently very under developed
-boolean pokemonEncounter = true;
+boolean pokemonEncounter = false;
+float randomRun;
+int runTries = 0;
+
 int boxSizeX = 280;//size
 int boxSizeY = 100;
 //box 1 coords
@@ -47,15 +50,67 @@ void drawBattle()
   fill(255);
   rect(textBoxX,textBoxY,textBoxSX,textBoxSY);
 }
-
-void pokemonBag()
+//Methods for the funny buttons
+//bag
+void pokemonBagBox()
 {
- background(0,0,255);
+ drawPokemonBag();
  
 }
+//run
+void runBox()
+{
+  //TRIES DONT WORK FIX TOMMOROW 
+  //makes tries being three you have three chances if you fail to much you have to fight
+  if(runTries != 3 && runTries < 3)
+  {
+    //random number between 0 - 100
+    randomRun = random(100);
+    //50% chance
+    if(randomRun <= 1)
+    {
+      pokemonEncounter = false;
+      runTries++;
+      print("Run Success");// print text to white box
+    }
+    else
+    {
+      print("Run Failed");//make in white box 
+      //make a way for them to try again besides just clicking the button over and over
+    }
+  }
+  else
+  {
+   print("Tries exceeded");
+   //make in the whit box make it more readable THIS IS A PLACEHOLDER FOR NOW FOR PROOF OF CONCEPT
+  }
+  
+  //pokemonEncounter = false;
+}
+//attack
+void attackBox()
+{
+  background(0,255,0);
+}
+//consumables
+void ConsumablesBox()
+{
+  if(foodClicked)
+  {
+    background(255,0,0);
+  }
+}
+//temp
+void drawPokemonBag()
+{
+ background(0,0,255); 
+}
+
+
 //makes the buttons work
 //The buttons currently output true for each box 
 // make diffrent screens show up for each option like a bag if your in the bag
+//buttons dont stick
 
  void mousePressed()
  {
@@ -68,21 +123,25 @@ void pokemonBag()
      {
        runClicked = true;
        println(runClicked + "Run");
+       runBox();
      }
      else if(mouseX >= box2X && mouseY >= box2Y)
      {
          pokeClicked = true;
          println(pokeClicked + "Bag");
+         pokemonBagBox();
      }
       else if(mouseX >= box3X && mouseY >= box3Y)
      {
          attackClicked = true;
          println(attackClicked + "Attack");
+         attackBox();
      }
       else if(mouseX >= box4X && mouseY >= box4Y)
      {
          foodClicked = true;
          println(foodClicked + "food n stuff");
+         ConsumablesBox();
      }
    }
    
