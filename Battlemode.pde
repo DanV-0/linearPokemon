@@ -21,11 +21,13 @@ int box3Y = box1Y;
 int box4X = box1X - 300;
 int box4Y = box1Y - 120;
 //textbox
-int textBoxX = 50;
-int textBoxY = box4Y;
-int textBoxSX = 600;
-int textBoxSY = 200;
-
+float textBoxX = 50;
+float textBoxY = box4Y;
+float textBoxSX = 600;
+float textBoxSY = 200;
+//Text
+float textX = textBoxX + 40; 
+float textY = textBoxY + 30;
 //int textBoxS = 0;
 //testing things for boxes
 boolean runClicked = false;
@@ -35,6 +37,7 @@ boolean foodClicked = false;
 //makes background black if battlemode starts
 void drawBattle()
 {
+  stroke(1);
   //Action boxes attack/flee etc
   fill(255,255,0);
   background(200,230,250);
@@ -49,6 +52,8 @@ void drawBattle()
   
   fill(255);
   rect(textBoxX,textBoxY,textBoxSX,textBoxSY);
+  fill(0);
+  text("IM cool",textX,textY );//testing
 }
 //Methods for the funny buttons
 //bag
@@ -60,23 +65,24 @@ void pokemonBagBox()
 //run
 void runBox()
 {
-  //TRIES DONT WORK FIX TOMMOROW 
+  //Run should work
   //makes tries being three you have three chances if you fail to much you have to fight
-  if(runTries != 3 && runTries < 3)
+  if(runTries <= 3)
   {
     //random number between 0 - 100
     randomRun = random(100);
     //50% chance
-    if(randomRun <= 1)
+    if(randomRun <= 50)
     {
       pokemonEncounter = false;
-      runTries++;
-      print("Run Success");// print text to white box
+
+      print("\nRun Success ");// print text to white box
     }
     else
     {
-      print("Run Failed");//make in white box 
+      print("\nRun Failed ");//make in white box 
       //make a way for them to try again besides just clicking the button over and over
+      runTries++;
     }
   }
   else
@@ -122,25 +128,25 @@ void drawPokemonBag()
      if(mouseX >= box1X && mouseY >= box1Y)
      {
        runClicked = true;
-       println(runClicked + "Run");
+       println("\n"+runClicked + "Run ");
        runBox();
      }
      else if(mouseX >= box2X && mouseY >= box2Y)
      {
          pokeClicked = true;
-         println(pokeClicked + "Bag");
+         println("\n"+pokeClicked + "Bag ");
          pokemonBagBox();
      }
       else if(mouseX >= box3X && mouseY >= box3Y)
      {
          attackClicked = true;
-         println(attackClicked + "Attack");
+         println("\n"+attackClicked + "Attack ");
          attackBox();
      }
       else if(mouseX >= box4X && mouseY >= box4Y)
      {
          foodClicked = true;
-         println(foodClicked + "food n stuff");
+         println("\n"+foodClicked + "food n stuff ");
          ConsumablesBox();
      }
    }

@@ -23,6 +23,7 @@ void setup()
   fullScreen();
 }
 //allows the players movement as well as implementing collision
+// R and F are for testing for the battle bit 
 void keyPressed()
 {
   if (key== 'w'   &&  playerY > 0 &&  map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
@@ -45,9 +46,24 @@ void keyPressed()
     mapX++;
     timingMillis = millis();
   }
+  if(key == 'r')
+  {
+    if(!pokemonEncounter)
+    {
+      pokemonEncounter = true;
+    }
+  }
+  if(key == 'f')
+  {
+    if(pokemonEncounter)
+    {
+      pokemonEncounter = false;
+    }
+  }
   println("mapY " + mapY);
   println("mapX " + mapX);
   println("current route " + currentMap);
+  
 }
 
 void draw() 
@@ -121,6 +137,11 @@ void draw()
   catch(Exception e) 
   { 
     drawChar();
+  }
+  //draws battlemode if pokemon is encountered
+  if(pokemonEncounter)
+  {
+    drawBattle();
   }
 }
 
