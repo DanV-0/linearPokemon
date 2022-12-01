@@ -26,12 +26,12 @@ void setup()
 //allows the players movement as well as implementing collision
 void keyPressed()
 {
-  if (key== 'w'   &&  playerY > 0 &&  map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
+  if (key== 'w'   &&  playerY > 0  && map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
   {
     mapY--;
     timingMillis = millis();
   }
-  if (key== 's' && playerY != 100 && map.returnRoute( currentMap)[playerY + 1][ playerX] != 3  && moveSpeed(timingMillis))
+  if (key== 's' && playerY < map.returnRoute( currentMap).length && map.returnRoute( currentMap)[playerY + 1][ playerX] != 3  && moveSpeed(timingMillis))
   {
     mapY++;
     timingMillis = millis();
@@ -41,7 +41,7 @@ void keyPressed()
     mapX--;
     timingMillis = millis();
   }
-  if (key== 'd' && playerX != 100 && map.returnRoute( currentMap)[playerY][ playerX + 1] != 3 && moveSpeed(timingMillis))
+  if (key== 'd' && playerX <= map.returnRoute( currentMap)[1].length && map.returnRoute( currentMap)[playerY][ playerX + 1] != 3 && moveSpeed(timingMillis))
   {
     mapX++;
     timingMillis = millis();
@@ -105,7 +105,7 @@ void draw()
           }
            if (currentMap == 2)
           {
-            mapX  = 0;
+            mapX  = -1;
             mapY = 5;
           }
         }
