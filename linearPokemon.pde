@@ -31,7 +31,7 @@ void keyPressed()
     mapY--;
     timingMillis = millis();
   }
-  if (key== 's' && playerY < map.returnRoute( currentMap).length && map.returnRoute( currentMap)[playerY + 1][ playerX] != 3  && moveSpeed(timingMillis))
+  if (key== 's' && playerY <= map.returnRoute( currentMap).length && map.returnRoute( currentMap)[playerY + 1][ playerX] != 3  && moveSpeed(timingMillis))
   {
     mapY++;
     timingMillis = millis();
@@ -46,8 +46,8 @@ void keyPressed()
     mapX++;
     timingMillis = millis();
   }
-  
-  
+
+
   println("mapY " + mapY);
   println("mapX " + mapX);
   println("current route " + currentMap);
@@ -59,7 +59,7 @@ void draw()
   {
     photo = loadImage("Player-123#.png");
 
-//draws the map by pulling the integers from the array
+    //draws the map by pulling the integers from the array
     //186,164,67
     for (int j = 0; j < 10; j++)
     {
@@ -71,51 +71,46 @@ void draw()
         {
           fill(0, 100, 0);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        }
-        else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 1)
+        } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 1)
         {
           fill(100, 200, 100);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } 
-        else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
+        } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
         {
           fill(100, 300, 100);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } 
-        else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 2)
+        } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 2)
         {
           fill(186, 164, 67);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 3)
         {
           fill(0, 100, 0);
-          rect(
-          i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } 
-        else if(map.returnRoute( currentMap)[playerY][playerX] > 5 || map.returnRoute( currentMap)[playerY][playerX] == 4)
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        } else if (map.returnRoute( currentMap)[playerY][playerX] > 5 || map.returnRoute( currentMap)[playerY][playerX] == 4)
         {
           fill(300);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-          nxtRoute = map.returnRoute( currentMap)[j+playerY][i+playerX];
-          currentMap = changeMap();
+          
+          changeMap();
           if (currentMap == 1)
           {
             mapX  = 0;
             mapY = 12;
           }
-           if (currentMap == 2)
+          if (currentMap == 2)
           {
             mapX  = -1;
             mapY = 5;
           }
         }
+//rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
 
-        
-        
+
         if (i == 5 && j == 4)
         {
           fill(300, 0, 0);
-          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+          //rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
           //rect(i*(((height+width)/2)/10),j*(((height+width)/2)/10),(width/10),(((height+width)/2)/10));
           playerX = mapX +5;
           playerY = mapY +4;
@@ -132,31 +127,22 @@ void draw()
 
 boolean moveSpeed(int lastMove)
 {
-  if (lastMove +4 <= millis())
+  if (lastMove + 10 <= millis())
     return true;
   else
     return false;
 }
 
-int changeMap()
+void changeMap()
 {
-if(currentMap == 1)
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4)
   {
-  return 2;
+    currentMap ++;
   }
- if(currentMap == 2)
- {
-   if(nxtRoute == 6)
-     return 1;
-   else if(nxtRoute == 7)
-    return 0; // need to make the route you get for going this way 
-    
-    else
-      return 0;
- }
-  
-  else
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6)
   {
-  return 0;
-  }
+   currentMap --;
+   
+  } 
+
 }
