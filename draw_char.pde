@@ -16,11 +16,11 @@ int mXPos1, mYPos1, mXPos2, mYPos2;
 int i=0;
 boolean press=true;
 boolean enterPressed=false;
-
+int R=70,G=45,B=90;
 void drawChar()
 {
-
-  background(70,45,90);
+  background(R,G,B);
+  
   try
   {
     photo = loadImage("Player-123#.png");
@@ -33,7 +33,7 @@ void drawChar()
     if(i<1)
     {
       fill(20,20,90);textSize(20);
-      for(int i=0;i<height*2;i+=50)
+      for(int i=0;i<height*2.5;i+=50)
       {
         noStroke();
         quad(20+i, 0, 40+i, 0, 0, 40+i, 0, 20+i);
@@ -42,6 +42,10 @@ void drawChar()
       text("Welcom to linear Monter Battle",width/2,height/2);
       text("Draw a starting character using the mouse to contuine",width/2,height-100);
     }
+   
+    
+    
+    
     if(Starting==true&&i!=31)
     {
       fill(200);
@@ -149,6 +153,7 @@ void mouseReleased()
     {textBuffer+=" ";}
     if(keyCode == BACKSPACE && textBuffer.length()>0 )
     {textBuffer = textBuffer.substring(0,textBuffer.length()-1);}
+    
   }
   else
   {textBuffer="";}
@@ -176,6 +181,7 @@ void mouseReleased()
     println("image saved");
     Starting=false;
     //output.close();
+    print(R);
     exit(); 
   }
 }
