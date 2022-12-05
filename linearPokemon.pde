@@ -13,7 +13,7 @@ int currentMap = 0;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
 
-
+Pokemon PH = new Pokemon("placeholder", "fire", 10, 20, true);
 void setup()
 { 
   photo = loadImage("Player-123#.png");
@@ -21,6 +21,7 @@ void setup()
   parseFile(); 
   //size(500, 500);
   fullScreen();
+  
 }
 //allows the players movement as well as implementing collision
 // R and F are for testing for the battle bit 
@@ -59,6 +60,16 @@ void keyPressed()
     {
       pokemonEncounter = false;
     }
+  }
+  if(key == 'y' && pokemonEncounter && choiceBoxActive)
+  {
+    choiceBoxActive = false;
+    runBox();
+    
+  }
+  if(key == 'n' && pokemonEncounter)
+  {
+    choiceBoxActive = false;
   }
   println("mapY " + mapY);
   println("mapX " + mapX);
@@ -142,6 +153,13 @@ void draw()
   if(pokemonEncounter)
   {
     drawBattle();
+    PH.drawPokemon();
+    PH.drawMoves();
+    if(choiceBoxActive)
+    {
+       drawChoiceBox(); 
+    }
+    
   }
 }
 
