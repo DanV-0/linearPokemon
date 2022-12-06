@@ -39,7 +39,7 @@ void drawChar()
         quad(20+i, 0, 40+i, 0, 0, 40+i, 0, 20+i);
       }
       fill(200);
-      text("Welcom to linear Monter Battle",width/2,height/2);
+      text("Welcome to linear Monster Battle",width/2,height/2);
       text("Draw a starting character using the mouse to contuine",width/2,height-100);
     }
     if(Starting==true&&i!=31)
