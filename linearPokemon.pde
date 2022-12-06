@@ -6,7 +6,7 @@
 //4 = loading next zone
 PImage photo;
 int mapX = 0;
-int mapY = 0;
+int mapY = 14;
 int playerX = 0;
 int playerY = 0;
 int currentMap = 1;
@@ -93,16 +93,16 @@ void draw()
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
           
           changeMap();
-          if (currentMap == 1)
-          {
-            mapX  = 0;
-            mapY = 12;
-          }
-          if (currentMap == 2)
-          {
-            mapX  = -1;
-            mapY = 5;
-          }
+//          if (currentMap == 1)
+//          {
+//            mapX  = 1;
+//            mapY = -3;
+//          }
+//          if (currentMap == 2)
+//          {
+//            mapX  = -1;
+//            mapY = 11;
+//          }
         }
 //rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
 
@@ -135,14 +135,37 @@ boolean moveSpeed(int lastMove)
 
 void changeMap()
 {
-  if (map.returnRoute( currentMap)[playerY][playerX]  == 4)
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 1)
   {
     currentMap ++;
+    mapX  = -2;
+    mapY = 11;
   }
-  if (map.returnRoute( currentMap)[playerY][playerX]  == 6)
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 2)
   {
+    currentMap ++;
+  mapX  = 1;
+  mapY = -3;
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 2)
+  {
+
    currentMap --;
+   mapX  = 1;
+   mapY = -2;
    
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 3)
+  {
+
+   currentMap --;
+      mapX  = 43;
+   mapY = 11;
   } 
+  
+ 
 
 }
