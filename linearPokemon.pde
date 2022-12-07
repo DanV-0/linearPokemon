@@ -6,15 +6,14 @@
 //4 = loading next zone
 PImage photo;
 int mapX = 0;
-int mapY = 14;
+int mapY = 0;
 int playerX = 0;
 int playerY = 0;
-int currentMap = 1;
+int currentMap = 0;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
-int nxtRoute;
 
-
+Pokemon PH = new Pokemon("placeholder", "fire", 10, 20, true);
 void setup()
 { 
   photo = loadImage("Player-123#.png");
@@ -22,16 +21,18 @@ void setup()
   parseFile(); 
   //size(500, 500);
   fullScreen();
+  
 }
 //allows the players movement as well as implementing collision
+// R and F are for testing for the battle bit 
 void keyPressed()
 {
-  if (key== 'w'   &&  playerY > 0  && map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
+  if (key== 'w'   &&  playerY > 0 &&  map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
   {
     mapY--;
     timingMillis = millis();
   }
-  if (key== 's' && playerY <= map.returnRoute( currentMap).length && map.returnRoute( currentMap)[playerY + 1][ playerX] != 3  && moveSpeed(timingMillis))
+  if (key== 's' && playerY != 100 && map.returnRoute( currentMap)[playerY + 1][ playerX] != 3  && moveSpeed(timingMillis))
   {
     mapY++;
     timingMillis = millis();
@@ -41,16 +42,39 @@ void keyPressed()
     mapX--;
     timingMillis = millis();
   }
-  if (key== 'd' && playerX <= map.returnRoute( currentMap)[1].length && map.returnRoute( currentMap)[playerY][ playerX + 1] != 3 && moveSpeed(timingMillis))
+  if (key== 'd' && playerX != 100 && map.returnRoute( currentMap)[playerY][ playerX + 1] != 3 && moveSpeed(timingMillis))
   {
     mapX++;
     timingMillis = millis();
   }
-
-
+  if(key == 'r')
+  {
+    if(!pokemonEncounter)
+    {
+      pokemonEncounter = true;
+    }
+  }
+  if(key == 'f')
+  {
+    if(pokemonEncounter)
+    {
+      pokemonEncounter = false;
+    }
+  }
+  if(key == 'y' && pokemonEncounter && choiceBoxActive)
+  {
+    choiceBoxActive = false;
+    runBox();
+    
+  }
+  if(key == 'n' && pokemonEncounter)
+  {
+    choiceBoxActive = false;
+  }
   println("mapY " + mapY);
   println("mapX " + mapX);
   println("current route " + currentMap);
+  
 }
 
 void draw() 
@@ -59,7 +83,7 @@ void draw()
   {
     photo = loadImage("Player-123#.png");
 
-    //draws the map by pulling the integers from the array
+//draws the map by pulling the integers from the array
     //186,164,67
     for (int j = 0; j < 10; j++)
     {
@@ -71,46 +95,48 @@ void draw()
         {
           fill(0, 100, 0);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 1)
+        }
+        else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 1)
         {
           fill(100, 200, 100);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
+        } 
+        else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
         {
           fill(100, 300, 100);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 2)
+        } 
+        else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 2)
         {
           fill(186, 164, 67);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 3)
         {
           fill(0, 100, 0);
-          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-        } else if (map.returnRoute( currentMap)[playerY][playerX] > 5 || map.returnRoute( currentMap)[playerY][playerX] == 4)
+          rect(
+          i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        } 
+        else if (map.returnRoute( currentMap)[playerY][playerX] == 4)
         {
           fill(300);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-          
-          changeMap();
-//          if (currentMap == 1)
-//          {
-//            mapX  = 1;
-//            mapY = -3;
-//          }
-//          if (currentMap == 2)
-//          {
-//            mapX  = -1;
-//            mapY = 11;
-//          }
+          if (currentMap == 1)
+          {
+            mapX  = 0;
+            mapY = 12;
+          }
         }
-//rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-
-
+        else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4)
+        {
+        fill(300);
+        rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        }
+        
+        
         if (i == 5 && j == 4)
         {
           fill(300, 0, 0);
-          //rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
           //rect(i*(((height+width)/2)/10),j*(((height+width)/2)/10),(width/10),(((height+width)/2)/10));
           playerX = mapX +5;
           playerY = mapY +4;
@@ -123,49 +149,24 @@ void draw()
   { 
     drawChar();
   }
+  //draws battlemode if pokemon is encountered
+  if(pokemonEncounter)
+  {
+    drawBattle();
+    PH.drawPokemon();
+    PH.drawMoves();
+    if(choiceBoxActive)
+    {
+       drawChoiceBox(); 
+    }
+    
+  }
 }
 
 boolean moveSpeed(int lastMove)
 {
-  if (lastMove + 10 <= millis())
+  if (lastMove +4 <= millis())
     return true;
   else
     return false;
-}
-
-void changeMap()
-{
-  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 1)
-  {
-    currentMap ++;
-    mapX  = -2;
-    mapY = 11;
-  }
-  
-  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 2)
-  {
-    currentMap ++;
-  mapX  = 1;
-  mapY = -3;
-  }
-  
-  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 2)
-  {
-
-   currentMap --;
-   mapX  = 1;
-   mapY = -2;
-   
-  }
-  
-  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 3)
-  {
-
-   currentMap --;
-      mapX  = 43;
-   mapY = 11;
-  } 
-  
- 
-
 }
