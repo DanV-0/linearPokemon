@@ -9,7 +9,7 @@ int mapX = 0;
 int mapY = 0;
 int playerX = 0;
 int playerY = 0;
-int currentMap = 3;
+int currentMap = 1;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
 
@@ -184,7 +184,7 @@ void changeMap()
   if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 2)
   {
     mapX  = 1;
-    mapY = -3;
+    mapY = 1;
     currentMap ++;
 
 
