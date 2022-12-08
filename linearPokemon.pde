@@ -9,7 +9,7 @@ int mapX = 0;
 int mapY = 0;
 int playerX = 0;
 int playerY = 0;
-int currentMap = 0;
+int currentMap = 1;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
 
@@ -116,20 +116,19 @@ void draw()
           rect(
           i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
-        else if (map.returnRoute( currentMap)[playerY][playerX] == 4)
+        else if (map.returnRoute( currentMap)[playerY][playerX] == 4 || map.returnRoute( currentMap)[playerY][playerX] >= 6 )
         {
           fill(300);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-          if (currentMap == 1)
-          {
-            mapX  = 0;
-            mapY = 12;
-          }
+          changeMap();
+         
         }
-        else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4)
+        else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4  )
         {
         fill(300);
         rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        
+       
         }
         
         
@@ -169,4 +168,42 @@ boolean moveSpeed(int lastMove)
     return true;
   else
     return false;
+}
+
+
+void changeMap()
+{
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 1)
+  {
+        mapX  = -2;
+    mapY = 11;
+    currentMap ++;
+
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 2)
+  {
+    mapX  = 1;
+    mapY = 1;
+    currentMap ++;
+
+
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 2)
+  {
+   mapX  = 1;
+   mapY = -3;
+   currentMap --;
+
+   
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 3)
+  {
+   mapX  = 43;
+   mapY = 11;
+   currentMap --;
+
+  } 
 }
