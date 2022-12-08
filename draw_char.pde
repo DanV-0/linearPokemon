@@ -21,16 +21,16 @@ void drawChar()
 {
   background(R,G,B);
   
-  try
+  try//Atemps to load the player imige
   {
     photo = loadImage("Player-123#.png");
     image(photo, mouseX, mouseY,  60,60); 
     name=parseFile();
     fill(0);text(name,mouseX,mouseY+70);
   }
-  catch(Exception e) 
+  catch(Exception e)//forces it to draw the player if it doesn't exest
   {  
-    if(i<1)
+    if(i<1)//draws the blue line for the back ground
     {
       fill(20,20,90);textSize(20);
       for(int i=0;i<height*2.5;i+=50)
@@ -46,7 +46,7 @@ void drawChar()
     
     
     
-    if(Starting==true&&i!=31)
+    if(Starting==true&&i!=31)//shows the total number of linses posible
     {
       fill(200);
       textSize(13);text(i+"/31", width-40, height-20);
