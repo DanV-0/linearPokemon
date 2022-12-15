@@ -13,7 +13,8 @@ int currentMap = 0;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
 
-Pokemon PH = new Pokemon("placeholder", "fire", 10, 20, true);
+Pokemon PH = new Pokemon("Blue Ball", "ghost", 10, 20, true);
+Pokemon Enemy = new Pokemon("Yellow Ball", "water", 10, 21, false);
 void setup()
 { 
   photo = loadImage("Player-123#.png");
@@ -153,8 +154,13 @@ void draw()
   if(pokemonEncounter)
   {
     drawBattle();
+    Enemy.drawPokemon();
     PH.drawPokemon();
     PH.drawMoves();
+    //prob placeholder or in progress could change to only intiate if taking damage is needed
+    PH.moveDamageAssign();
+    Enemy.moveDamageAssign();
+    drawHealth();
     if(choiceBoxActive)
     {
        drawChoiceBox(); 

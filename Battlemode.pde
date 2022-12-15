@@ -1,10 +1,12 @@
+//the moves are bound to the wrong buttons fix!!!!!!! and make moves work proper
+
 //Cosmetics for boxes such as text needs to be in place
 //in the future unload map and load battle mode to get more performance if thats even possible
 //battlemode currently very under developed
 boolean pokemonEncounter = true;
 float randomRun;
 int runTries = 0;
-
+float hitChance;
 int boxSizeX = 280;//size
 int boxSizeY = 100;
 //box 1 coords
@@ -30,12 +32,17 @@ float textX = textBoxX + 40;
 float textY = textBoxY + 30;
 String text = " ";
 //int textBoxS = 0;
-//testing things for boxes
+//to know if the box has been tapped
 boolean runClicked = false;
 boolean pokeClicked = false;
 boolean attackClicked = false;
 boolean foodClicked = false;
 boolean choiceBoxActive = false;
+//fun move checks
+boolean move1Clicked = false;
+boolean move2Clicked = false;
+boolean move3Clicked = false;
+boolean move4Clicked = false;
 ///////////////////////////////////////////////////////
 
 //makes background black if battlemode starts
@@ -76,6 +83,11 @@ void drawBattle()
     text(" Pokemon ",box2X+110,box2Y+60);
     text(" Bag and consumables ",box3X+50,box3Y+60);
   }
+}
+void drawHealth()// do this when your ready for hud and get turns working 
+{
+  //empty for now
+  print("\nYour health --"+PH.health);
 }
 //Methods for the funny buttons
 void drawChoiceBox()
@@ -133,6 +145,7 @@ void attackBox()
   if(attackClicked)
   {
     PH.moveSet();
+    //Enemy.EnemyMoves();
     //PH.drawMoves();
     //background(0, 255, 0);
     text = "Attack";
@@ -154,15 +167,26 @@ void drawPokemonBag()
   background(0, 0, 255);
   text = "Pokemon";
 }
+void hitChance()
+{
+  hitChance = random(100); 
+  if(hitChance <= 85)
+  {
+    Enemy.enemyTakeDamage();
+    text = "Your attack landed!";
+  }
+  else
+  {
+   text = "Your attack missed!";
+  }
+}
 
 
 
 //makes the buttons work
 //The buttons currently output true for each box
 // make diffrent screens show up for each option like a bag if your in the bag
-//buttons dont stick
-//currently a bug where when choice box is up you can still click other buttons needs fixing moving on now
-
+//NEW BUG when you click attack once it acts like scream FIX btw key released no work
 void mousePressed()
 {
   press=true;
@@ -172,34 +196,83 @@ void mousePressed()
   {
     if (mouseX >= box1X && mouseY >= box1Y)
     {
-      runClicked = true;
-      println("\n"+runClicked + "Run ");
-      //runBox();
-      choiceBoxActive = true;
-      for(int i = 0; i < 5; i++)
+      if(!attackClicked)
       {
-        pokeClicked = false;
-        attackClicked = false;
-        foodClicked = false;
+        runClicked = true;
+        println("\n"+runClicked + "Run ");
+        //runBox();
+        choiceBoxActive = true;
+        for(int i = 0; i < 5; i++)
+        {
+          pokeClicked = false;
+          attackClicked = false;
+          foodClicked = false;
+        }
+      }
+      if(attackClicked)
+      {
+        text = "You used "+ PH.move1;
+        move1Clicked = true;
+        hitChance();
+        PH.moveDamageAssign();
+        PH.enemyTakeDamage();
+        print("\nEnemy health PH ----" + Enemy.health);
+        //maybe a for loop or somthing to make it wait a bit so you can see the moved used
       }
     } 
     else if (mouseX >= box2X && mouseY >= box2Y)
     {
-      pokeClicked = true;
-      println("\n"+pokeClicked + "Bag ");
-      pokemonBagBox();
+      if(!attackClicked)
+      {
+        pokeClicked = true;
+        println("\n"+pokeClicked + "Bag ");
+        pokemonBagBox();
+      }
+      if(attackClicked)
+      {
+        text = "You used "+ PH.move2;
+        move2Clicked = true;
+        hitChance();
+        PH.moveDamageAssign();
+        PH.enemyTakeDamage();
+        print("\nEnemy health PH ----" + Enemy.health);
+      }
     } 
     else if (mouseX >= box3X && mouseY >= box3Y)
     {
-     foodClicked = true;
-     println("\n"+foodClicked + "food n stuff ");
-     ConsumablesBox();
+     if(!attackClicked)
+     {
+       foodClicked = true;
+       println("\n"+foodClicked + "food n stuff ");
+       ConsumablesBox();
+     }
+     if(attackClicked)
+      {
+        text = "You used "+ PH.move3;
+        move3Clicked = true;
+        hitChance();
+        PH.moveDamageAssign();
+        PH.enemyTakeDamage();
+        print("\nEnemy health PH ----" + Enemy.health);
+      }
     } 
     else if (mouseX >= box4X && mouseY >= box4Y)
     {
-      attackClicked = true;
-      println("\n"+attackClicked + "Attack ");
-      attackBox();
+      if(!attackClicked)
+      {
+        attackClicked = true;
+        println("\n"+attackClicked + "Attack ");
+        attackBox();
+      }
+      if(attackClicked)
+      {
+        text = "You used "+ PH.move4;
+        move4Clicked = true;
+        hitChance();
+        PH.moveDamageAssign();
+        PH.enemyTakeDamage();
+        print("\nEnemy health PH ----" + Enemy.health);
+      }
     }
   }
 }
