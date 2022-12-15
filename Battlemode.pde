@@ -5,8 +5,11 @@
 //battlemode currently very under developed
 boolean pokemonEncounter = true;
 float randomRun;
+int battleDelay = 0;
+boolean battleDelayed;
 int runTries = 0;
 float hitChance;
+float enemyHitChance;
 int boxSizeX = 280;//size
 int boxSizeY = 100;
 //box 1 coords
@@ -43,6 +46,11 @@ boolean move1Clicked = false;
 boolean move2Clicked = false;
 boolean move3Clicked = false;
 boolean move4Clicked = false;
+//Did you win?????
+boolean playerWin = false;
+boolean enemyWin = false;
+//turns
+boolean playerTurn = true;
 ///////////////////////////////////////////////////////
 
 //makes background black if battlemode starts
@@ -54,25 +62,25 @@ void drawBattle()
   fill(255, 255, 0);
   background(200, 230, 250);
   //Run option
-  rect(box1X, box1Y, boxSizeX, boxSizeY);
+  rect(box1X, box1Y, boxSizeX, boxSizeY,10);
   fill(0);
   
   //pokemon option
   fill(255, 255, 0);
-  rect(box2X, box2Y, boxSizeX, boxSizeY);
+  rect(box2X, box2Y, boxSizeX, boxSizeY,10);
   fill(0);
   
   //Attack option
   fill(255, 255, 0);
-  rect(box3X, box3Y, boxSizeX, boxSizeY);
+  rect(box3X, box3Y, boxSizeX, boxSizeY,10);
   fill(0);
   
   //Bag option
   fill(255, 255, 0);
-  rect(box4X, box4Y, boxSizeX, boxSizeY);
+  rect(box4X, box4Y, boxSizeX, boxSizeY,10);
   fill(0);
   fill(255);
-  rect(textBoxX, textBoxY, textBoxSX, textBoxSY);
+  rect(textBoxX, textBoxY, textBoxSX, textBoxSY, 10);
   fill(0);
   textSize(20);
   text(text, textX, textY ); // puts text in the text box *updates*
@@ -84,11 +92,45 @@ void drawBattle()
     text(" Bag and consumables ",box3X+50,box3Y+60);
   }
 }
-void drawHealth()// do this when your ready for hud and get turns working 
+void drawHealth()
 {
-  //empty for now
+  //Player bit
+  noStroke();
+  if(PH.health > 0)
+   {
+     fill(50,255*(PH.health/10.0),0); 
+     noStroke();
+     rect(width/2-100,height/2,200*(PH.health/10.0),20);
+   }
+   noFill(); 
+   stroke(170); 
+   strokeWeight(3);
+   rect(width/2-100,height/2,200,20);
+   noStroke();
+   
+  print("\nYour health --"+PH.health);
+  //Enemy bit
+  noStroke();
+  if(Enemy.health > 0)
+   {
+     fill(50,255*(Enemy.health/10.0),0); 
+     noStroke();
+     rect(width/2,height/2-250,200*(Enemy.health/10.0),20);
+   }
+   noFill(); 
+   stroke(170); 
+   strokeWeight(3);
+   rect(width/2,height/2-250,200,20);
+   noStroke();
+   
   print("\nYour health --"+PH.health);
 }
+/*
+void drawEnemyHealth()
+{
+  
+}
+*/
 //Methods for the funny buttons
 void drawChoiceBox()
 {
@@ -167,6 +209,7 @@ void drawPokemonBag()
   background(0, 0, 255);
   text = "Pokemon";
 }
+//players hit chance
 void hitChance()
 {
   hitChance = random(100); 
@@ -178,6 +221,37 @@ void hitChance()
   else
   {
    text = "Your attack missed!";
+  }
+}
+//enemys hit chance 
+void enemyHitChance()
+{
+  enemyHitChance = random(100);
+  if(enemyHitChance <= 85)
+  {
+    PH.playerTakeDamage();
+  }
+}
+void resetBattle()
+{
+  if(playerWin == true)
+  {
+    pokemonEncounter = false;
+    print("You win PH");
+    PH.health = 10;
+    Enemy.health = 10;
+    attackClicked = false;
+    //playerTurn = true;
+  }
+  else if(enemyWin == true)
+  {
+    pokemonEncounter = false;
+    print("You Lose PH");
+    //just so it can reset
+    PH.health = 10;
+    Enemy.health = 10;
+    attackClicked = false;
+    //playerTurn = true;
   }
 }
 
@@ -209,15 +283,20 @@ void mousePressed()
           foodClicked = false;
         }
       }
-      if(attackClicked)
+      if(attackClicked && playerTurn == true)
       {
-        text = "You used "+ PH.move1;
-        move1Clicked = true;
-        hitChance();
-        PH.moveDamageAssign();
-        PH.enemyTakeDamage();
-        print("\nEnemy health PH ----" + Enemy.health);
-        //maybe a for loop or somthing to make it wait a bit so you can see the moved used
+        if(!battleDelayed)
+        {
+          setBattleDelay(1);
+          text = "You used "+ PH.move1;
+          move1Clicked = true;
+          hitChance();
+          PH.moveDamageAssign();
+          PH.enemyTakeDamage();
+          print("\nEnemy health PH ----" + Enemy.health+"\n");
+          playerTurn = false;
+          //maybe a for loop or somthing to make it wait a bit so you can see the moved used
+        }
       }
     } 
     else if (mouseX >= box2X && mouseY >= box2Y)
@@ -228,14 +307,19 @@ void mousePressed()
         println("\n"+pokeClicked + "Bag ");
         pokemonBagBox();
       }
-      if(attackClicked)
+      if(attackClicked && playerTurn == true)
       {
-        text = "You used "+ PH.move2;
-        move2Clicked = true;
-        hitChance();
-        PH.moveDamageAssign();
-        PH.enemyTakeDamage();
-        print("\nEnemy health PH ----" + Enemy.health);
+        if(!battleDelayed)
+        {
+          setBattleDelay(1);
+          text = "You used "+ PH.move2;
+          move2Clicked = true;
+          hitChance();
+          PH.moveDamageAssign();
+          PH.enemyTakeDamage();
+          print("\nEnemy health PH ----" + Enemy.health+"\n");
+          playerTurn = false;
+        }
       }
     } 
     else if (mouseX >= box3X && mouseY >= box3Y)
@@ -246,14 +330,19 @@ void mousePressed()
        println("\n"+foodClicked + "food n stuff ");
        ConsumablesBox();
      }
-     if(attackClicked)
+     if(attackClicked && playerTurn == true)
       {
-        text = "You used "+ PH.move3;
-        move3Clicked = true;
-        hitChance();
-        PH.moveDamageAssign();
-        PH.enemyTakeDamage();
-        print("\nEnemy health PH ----" + Enemy.health);
+        if(!battleDelayed)
+        {
+          setBattleDelay(1);
+          text = "You used "+ PH.move3;
+          move3Clicked = true;
+          hitChance();
+          PH.moveDamageAssign();
+          PH.enemyTakeDamage();
+          print("\nEnemy health PH ----" + Enemy.health+"\n");
+          playerTurn = false;
+        }
       }
     } 
     else if (mouseX >= box4X && mouseY >= box4Y)
@@ -264,15 +353,34 @@ void mousePressed()
         println("\n"+attackClicked + "Attack ");
         attackBox();
       }
-      if(attackClicked)
+      if(attackClicked && playerTurn == true)
       {
-        text = "You used "+ PH.move4;
-        move4Clicked = true;
-        hitChance();
-        PH.moveDamageAssign();
-        PH.enemyTakeDamage();
-        print("\nEnemy health PH ----" + Enemy.health);
+        if(!battleDelayed)
+        {
+          setBattleDelay(1);
+          text = "You used "+ PH.move4;
+          move4Clicked = true;
+          hitChance();
+          PH.moveDamageAssign();
+          PH.enemyTakeDamage();
+          print("\nEnemy health PH ----" + Enemy.health+"\n");
+          playerTurn = false;
+        }
+        else
+        {
+          if(millis() > battleDelay)
+          {
+            battleDelayed = false;
+          }
+        }
       }
+      
+      
     }
   }
+}
+void setBattleDelay(int time)
+{
+  battleDelay = millis() + (time* 1000);
+  battleDelayed = true;
 }

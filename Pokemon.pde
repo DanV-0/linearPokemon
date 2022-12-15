@@ -17,9 +17,10 @@ public class Pokemon
   String move1, move2, move3, move4;
   int pokePlayerX, pokePlayerY;
   int pokeEnemyX, pokeEnemyY;
-  boolean playerTime = true;
+  //boolean playerTurn = true;
   int damageDealt;
   String Stat;
+  
   
   //boolean evolutionReady
   //constructor
@@ -96,44 +97,44 @@ public class Pokemon
     
     if(move1 == "Bite")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     if(move2 == "Big Ball")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     if(move3 == "Blue Fire")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     if(move4 == "Scream")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     //new move set
     //YELLOW BALL DAMAGE ASSIGN 
     if(move1 == "Golden shower")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     if(move2 == "Wet slap")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     if(move3 == "Kidney Stone")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     if(move4 == "Drip Slip")
     {
-      damageDealt = 5;
+      damageDealt = 2;
       return damageDealt;
     }
     return 0;
@@ -177,37 +178,64 @@ public class Pokemon
     }
   }
   
-  public int enemyTakeDamage()
+  void enemyTakeDamage()
   {
-   return damageDealt - Enemy.health;
+   Enemy.health = Enemy.health - damageDealt;
+   if(Enemy.health <= 0)
+   {
+     playerWin = true;
+     resetBattle();
+   }
   }
   //THE ENEMY METHODS
-  public int playerTakeDamage()
+  void playerTakeDamage()
   {
-   return damageDealt - PH.health;
+   PH.health = PH.health - damageDealt;
+   if(PH.health <= 0)
+   {
+     enemyWin = true;
+     resetBattle();
+   }
   }
   
   //hopefully a very basic AI using a random chance to pick a move
-  void EnemyMoves()
+  void enemyMoves()
   {
-    moveSet();
-    float enemyMoveR = random(100);
-    if(enemyMoveR <= 25)
+    if(playerTurn == false)
     {
-     
+      moveSet();
+      float enemyMoveR = random(100);
+      if(enemyMoveR <= 25)
+      {
+        
+        Enemy.moveDamageAssign();
+        enemyHitChance();
+        //Enemy.playerTakeDamage();
+      }
+      else if(enemyMoveR <= 50)
+      {
+        
+        Enemy.moveDamageAssign();
+        enemyHitChance();
+        //Enemy.playerTakeDamage();
+      }
+      else if(enemyMoveR <= 75)
+      {
+        
+        Enemy.moveDamageAssign();
+        enemyHitChance();
+        //Enemy.playerTakeDamage();
+      }
+      else if (enemyMoveR <= 100)
+      {
+        
+        Enemy.moveDamageAssign();
+        enemyHitChance();
+        //Enemy.playerTakeDamage();
+      }
+      playerTurn = true;
     }
-    else if(enemyMoveR <= 50)
-    {
-      //move2
-    }
-    else if(enemyMoveR <= 75)
-    {
-      //move3
-    }
-    else if (enemyMoveR <= 100)
-    {
-     //move4 
-    }
+    
   }
   
   

@@ -1,4 +1,12 @@
 //besto gameo
+/*----------------------------------------------\*
+|            Pokemon Linear Version             |
+|                  Made By                      |
+|         Computer Science Year 3 Students      |
+|    Caleb Harris, Jordan Lawson, James Kirk    |
+\*----------------------------------------------/*
+*/
+
 
 // 1= tall grass  5= short grass
 //2 = path
@@ -75,6 +83,13 @@ void keyPressed()
   println("mapY " + mapY);
   println("mapX " + mapX);
   println("current route " + currentMap);
+  if(key == 'q' && pokemonEncounter)
+  {
+    if(attackClicked == true)
+    {
+      attackClicked = false;
+    }
+  }
   
 }
 
@@ -153,13 +168,17 @@ void draw()
   //draws battlemode if pokemon is encountered
   if(pokemonEncounter)
   {
+    
+    
     drawBattle();
+    noStroke();
     Enemy.drawPokemon();
     PH.drawPokemon();
     PH.drawMoves();
     //prob placeholder or in progress could change to only intiate if taking damage is needed
-    PH.moveDamageAssign();
-    Enemy.moveDamageAssign();
+    //PH.moveDamageAssign();
+    //Enemy.moveDamageAssign();
+    Enemy.enemyMoves();
     drawHealth();
     if(choiceBoxActive)
     {
