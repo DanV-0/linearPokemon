@@ -12,6 +12,7 @@ int playerY = 0;
 int currentMap = 1;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
+float random;
 
 Pokemon PH = new Pokemon("placeholder", "fire", 10, 20, true);
 void setup()
@@ -27,6 +28,7 @@ void setup()
 // R and F are for testing for the battle bit 
 void keyPressed()
 {
+  random = random(10);
   if (key== 'w'   &&  playerY > 0 &&  map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
   {
     mapY--;
@@ -47,13 +49,13 @@ void keyPressed()
     mapX++;
     timingMillis = millis();
   }
-  if(key == 'r')
+  /*if(key == 'r')
   {
     if(!pokemonEncounter)
     {
       pokemonEncounter = true;
     }
-  }
+  }*/
   if(key == 'f')
   {
     if(pokemonEncounter)
@@ -101,6 +103,12 @@ void draw()
           fill(100, 200, 100);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
+         else if (keyPressed && map.returnRoute( currentMap)[playerY][playerX] == 1 && random <= 1)
+        {
+          pokemonEncounter = true;
+          fill(100, 200, 100);
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        }
         else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
         {
           fill(100, 300, 100);
@@ -201,7 +209,7 @@ void changeMap()
   
   if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 3)
   {
-   mapX  = 43;
+   mapX  = 14;
    mapY = 11;
    currentMap --;
 
