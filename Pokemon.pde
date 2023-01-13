@@ -1,6 +1,8 @@
-//
-//For right now this is extremly bare bones and ima make a default to help make the Attack mode since thats hardest to do in my opinion
-//its just gonna be charmander
+//Two pokemon work with a little bit of messing can be changed
+//the presets are around 3 pokemon 
+//blue ball is the one the player has at first
+//--------------------------------------------------------------------
+//pokemon class
 public class Pokemon
 {
   //data
@@ -17,12 +19,9 @@ public class Pokemon
   String move1, move2, move3, move4;
   int pokePlayerX, pokePlayerY;
   int pokeEnemyX, pokeEnemyY;
-  //boolean playerTurn = true;
   int damageDealt;
   String Stat;
   
-  
-  //boolean evolutionReady
   //constructor
   public Pokemon(String name,String type, int health, int level, boolean isPlayer)
   {
@@ -59,11 +58,6 @@ public class Pokemon
        player.resize(400,400);
        image(player, pokePlayerX, pokePlayerY);
        imageMode(CORNER);
-       /*
-       stroke(2);
-       fill(0,0,255);
-       ellipse(pokePlayerX,pokePlayerY,200,200);
-       */
      }
    }
    else if(!isPlayer)
@@ -181,21 +175,25 @@ public class Pokemon
   void enemyTakeDamage()
   {
    Enemy.health = Enemy.health - damageDealt;
+   
    if(Enemy.health <= 0)
    {
      playerWin = true;
      resetBattle();
    }
+   
   }
   //THE ENEMY METHODS
   void playerTakeDamage()
   {
    PH.health = PH.health - damageDealt;
+   
    if(PH.health <= 0)
    {
-     enemyWin = true;
+     playerWin = false;
      resetBattle();
    }
+   
   }
   
   //hopefully a very basic AI using a random chance to pick a move
@@ -206,36 +204,28 @@ public class Pokemon
       moveSet();
       float enemyMoveR = random(100);
       if(enemyMoveR <= 25)
-      {
-        
+      {   
         Enemy.moveDamageAssign();
         enemyHitChance();
-        //Enemy.playerTakeDamage();
       }
       else if(enemyMoveR <= 50)
       {
-        
         Enemy.moveDamageAssign();
         enemyHitChance();
-        //Enemy.playerTakeDamage();
       }
       else if(enemyMoveR <= 75)
       {
-        
         Enemy.moveDamageAssign();
         enemyHitChance();
-        //Enemy.playerTakeDamage();
       }
       else if (enemyMoveR <= 100)
       {
-        
         Enemy.moveDamageAssign();
         enemyHitChance();
-        //Enemy.playerTakeDamage();
+
       }
       playerTurn = true;
     }
-    
   }
   
   

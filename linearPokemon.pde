@@ -180,12 +180,14 @@ void draw()
     //Enemy.moveDamageAssign();
     Enemy.enemyMoves();
     drawHealth();
+    
     if(choiceBoxActive)
     {
        drawChoiceBox(); 
     }
     
   }
+  
 }
 
 boolean moveSpeed(int lastMove)

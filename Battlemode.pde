@@ -1,16 +1,22 @@
-//the moves are bound to the wrong buttons fix!!!!!!! and make moves work proper
-
-//Cosmetics for boxes such as text needs to be in place
-//in the future unload map and load battle mode to get more performance if thats even possible
-//battlemode currently very under developed
-boolean pokemonEncounter = true;
-float randomRun;
+//CLEAN UP im done this is done
+/////////////////////////////////////
+/*
+Battlemode for fighting your pokemon
+Character sprites work win and lose scenerios 
+Could use more work
+/////////////////////////////////*/
+//Variables for all the draws and some other stuff
+//behavior variables
+boolean pokemonEncounter = true;// makes the battlemode start 
+float randomRun;// random chance for the run box
+//delays the attacks
 int battleDelay = 0;
 boolean battleDelayed;
-int runTries = 0;
-float hitChance;
-float enemyHitChance;
-int boxSizeX = 280;//size
+int runTries = 0;// counts your tries
+float hitChance;// stores the chance to hit
+float enemyHitChance;// enemys hitchance
+//DRAW VARIABLES
+int boxSizeX = 280;
 int boxSizeY = 100;
 //box 1 coords
 int box1X = 980;
@@ -34,7 +40,6 @@ float textBoxSY = 200;
 float textX = textBoxX + 40;
 float textY = textBoxY + 30;
 String text = " ";
-//int textBoxS = 0;
 //to know if the box has been tapped
 boolean runClicked = false;
 boolean pokeClicked = false;
@@ -48,7 +53,6 @@ boolean move3Clicked = false;
 boolean move4Clicked = false;
 //Did you win?????
 boolean playerWin = false;
-boolean enemyWin = false;
 //turns
 boolean playerTurn = true;
 ///////////////////////////////////////////////////////
@@ -84,6 +88,7 @@ void drawBattle()
   fill(0);
   textSize(20);
   text(text, textX, textY ); // puts text in the text box *updates*
+  //if attack is not triggered
   if(!attackClicked)
   {
     text(" Attack ",box4X+110,box4Y+60);
@@ -92,9 +97,11 @@ void drawBattle()
     text(" Bag and consumables ",box3X+50,box3Y+60);
   }
 }
+//Draws the health bars for the pokemon
+
 void drawHealth()
 {
-  //Player bit
+  //Player health
   noStroke();
   if(PH.health > 0)
    {
@@ -109,7 +116,7 @@ void drawHealth()
    noStroke();
    
   print("\nYour health --"+PH.health);
-  //Enemy bit
+  //Enemy health
   noStroke();
   if(Enemy.health > 0)
    {
@@ -125,23 +132,17 @@ void drawHealth()
    
   print("\nYour health --"+PH.health);
 }
-/*
-void drawEnemyHealth()
-{
-  
-}
-*/
 //Methods for the funny buttons
+
+
 void drawChoiceBox()
 {
-  //rectMode(CENTER);
   fill(255);
   stroke(3);
   rect(width-850, height/2, 500, 100);
   fill(0);
   textMode(CENTER);
   text("Do you Want to run? \n Yes (Y) or No (N)", width-690, height/2 + 40);
-  //rectMode(CORNER);
 }
 //bag
 void pokemonBagBox()
@@ -151,10 +152,6 @@ void pokemonBagBox()
 //run
 void runBox()
 {
-
-  //Run should work
-  //makes tries being three you have three chances if you fail to much you have to fight
-  //choice is fixed
   if (runTries <= 3)
   {
     //random number between 0 - 100
@@ -165,31 +162,26 @@ void runBox()
       text = "You got away safely!";
       pokemonEncounter = false;
       print("Run success");
-    } else
+    } 
+    else
     {
       text = "You couldn't get away!";
-
-      //text("Run Failed ",textX,textY);//make in white box
-      //make a way for them to try again besides just clicking the button over and over
       runTries++;
     }
-  } else
+  } 
+  else
   {
     text = "You can no longer escape";
     print("Tries exceeded");
-    
   }
-
 }
-//attack
+
+//attack box behaviors
 void attackBox()
 {
   if(attackClicked)
   {
     PH.moveSet();
-    //Enemy.EnemyMoves();
-    //PH.drawMoves();
-    //background(0, 255, 0);
     text = "Attack";
   }
 }
@@ -243,10 +235,10 @@ void resetBattle()
     attackClicked = false;
     //playerTurn = true;
   }
-  else if(enemyWin == true)
+  else if(playerWin == false)
   {
     pokemonEncounter = false;
-    print("You Lose PH");
+    print("\nYou Lose PH");
     //just so it can reset
     PH.health = 10;
     Enemy.health = 10;
@@ -287,7 +279,7 @@ void mousePressed()
       {
         if(!battleDelayed)
         {
-          setBattleDelay(1);
+          
           text = "You used "+ PH.move1;
           move1Clicked = true;
           hitChance();
@@ -296,6 +288,7 @@ void mousePressed()
           print("\nEnemy health PH ----" + Enemy.health+"\n");
           playerTurn = false;
           //maybe a for loop or somthing to make it wait a bit so you can see the moved used
+          setBattleDelay(1);
         }
       }
     } 
@@ -311,7 +304,7 @@ void mousePressed()
       {
         if(!battleDelayed)
         {
-          setBattleDelay(1);
+          
           text = "You used "+ PH.move2;
           move2Clicked = true;
           hitChance();
@@ -319,6 +312,7 @@ void mousePressed()
           PH.enemyTakeDamage();
           print("\nEnemy health PH ----" + Enemy.health+"\n");
           playerTurn = false;
+          setBattleDelay(1);
         }
       }
     } 
@@ -334,7 +328,7 @@ void mousePressed()
       {
         if(!battleDelayed)
         {
-          setBattleDelay(1);
+          
           text = "You used "+ PH.move3;
           move3Clicked = true;
           hitChance();
@@ -342,6 +336,7 @@ void mousePressed()
           PH.enemyTakeDamage();
           print("\nEnemy health PH ----" + Enemy.health+"\n");
           playerTurn = false;
+          setBattleDelay(1);
         }
       }
     } 
@@ -357,7 +352,7 @@ void mousePressed()
       {
         if(!battleDelayed)
         {
-          setBattleDelay(1);
+          
           text = "You used "+ PH.move4;
           move4Clicked = true;
           hitChance();
@@ -365,6 +360,7 @@ void mousePressed()
           PH.enemyTakeDamage();
           print("\nEnemy health PH ----" + Enemy.health+"\n");
           playerTurn = false;
+          setBattleDelay(1);
         }
         else
         {
@@ -381,6 +377,11 @@ void mousePressed()
 }
 void setBattleDelay(int time)
 {
-  battleDelay = millis() + (time* 1000);
+  battleDelay = millis() + (time* 10);
   battleDelayed = true;
 }
+//the moves are bound to the wrong buttons fix!!!!!!! and make moves work proper fixeed
+
+//Cosmetics for boxes such as text needs to be in place
+//in the future unload map and load battle mode to get more performance if thats even possible
+//battlemode currently very under developed
