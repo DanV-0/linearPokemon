@@ -1,16 +1,9 @@
-import java.io.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 
 // this scares me
 boolean Starting=true;
 String textBuffer = "";
-String name="";
-PrintWriter output=createWriter("name.txt");
-BufferedReader reader= createReader("name.txt");
+
+
 int[][] line = new int[32][4];
 int mXPos1, mYPos1, mXPos2, mYPos2;
 int i=0;
@@ -24,12 +17,11 @@ void drawChar()
   try//Atemps to load the player imige
   {
     photo = loadImage("Player-123#.png");
-    image(photo, mouseX, mouseY,  60,60); 
-    name=parseFile();
-    fill(0);text(name,mouseX,mouseY+70);
+
   }
   catch(Exception e)//forces it to draw the player if it doesn't exest
   {  
+
     if(i<1)//draws the blue line for the back ground
     {
       fill(20,20,90);textSize(20);
@@ -41,6 +33,7 @@ void drawChar()
       fill(200);
       text("Welcome to linear Monster Battle",width/2,height/2);
       text("Draw a starting character using the mouse to contuine",width/2,height-100);
+
     }
    
     
@@ -102,28 +95,6 @@ void drawChar()
   }
 }
 
-String parseFile() 
-{
-  String line = null;
-  String name="";
-  BufferedReader reader = createReader("name.txt");
-  try 
-  {
-    while ((line = reader.readLine()) != null) 
-    {
-      String[] pieces = split(line, TAB);
-      name = pieces[0];
-    }
-    reader.close();   
-  } 
-  catch (IOException e) 
-  {
-   e.printStackTrace();
-  }
-  return name;
-} 
-
-
 
 void mouseReleased()
 {
@@ -180,8 +151,22 @@ void mouseReleased()
     saveFrame("Player-123#.png");
     println("image saved");
     Starting=false;
-    //output.close();
-    print(R);
+    ////////////////////////////////////////////////////////////////////////////////////////
+    try
+    {
+      PrintWriter pw= createWriter("save.txt");//PrintWriter pw = createWriter( fileName );
+      pw.println(playerX+"\n"+playerY+"\n"+mapX+"\n"+mapY+"\n"+currentMap);
+      
+      pw.flush();//pw.flush(); //Writes the remaining data to the file
+      pw.close();//pw.close(); //Finishes the file
+      //exit();
+     }
+     catch(Exception e)
+     {
+       println("SOMETHING WENT WRONG#1");
+     }
+    
+    ///////////////////////////////////////////////////////////////////////////////////////
     exit(); 
   }
 }

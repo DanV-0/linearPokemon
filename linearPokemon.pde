@@ -5,11 +5,11 @@
 //3 = tree
 //4 = loading next zone
 PImage photo;
-int mapX = 0;
-int mapY = 0;
-int playerX = 0;
-int playerY = 0;
-int currentMap = 1;
+int mapX ;
+int mapY ;
+int playerX ;
+int playerY ;
+int currentMap ;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
 float random;
@@ -19,7 +19,7 @@ void setup()
 { 
   photo = loadImage("Player-123#.png");
   //imageMode(CENTER); 
-  parseFile(); 
+   loadGame(); 
   //size(500, 500);
   fullScreen();
   
@@ -215,3 +215,33 @@ void changeMap()
 
   } 
 }
+//////////////////////////////////////////////////////////////////////////////////////////////
+void loadGame() 
+{
+  
+  try
+  {
+    //use the loadStrings() method to pull the lines of your save file into a String array
+    String[] data= loadStrings("save.txt");
+   
+
+     playerX =Integer.parseInt(data[0]);
+     playerY =Integer.parseInt(data[1]);   
+     mapX =Integer.parseInt(data[2]);
+     mapY =Integer.parseInt(data[3]);
+     currentMap =Integer.parseInt(data[4]);
+
+  }
+  catch(Exception e)
+  {
+    println("SOMETHING WENT WRONG#2");
+   
+    //Loads default data
+     currentMap = 1;
+     mapX = 0;
+     mapY = 0;
+     playerX = 0;
+     playerY = 0;
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////
