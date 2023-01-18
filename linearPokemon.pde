@@ -13,13 +13,14 @@
 //3 = tree
 //4 = loading next zone
 PImage photo;
-int mapX = 0;
-int mapY = 0;
-int playerX = 0;
-int playerY = 0;
-int currentMap = 0;
+int mapX ;
+int mapY ;
+int playerX ;
+int playerY ;
+int currentMap ;
 routes_Map map = new routes_Map();
 int timingMillis = 0;
+float random;
 
 Pokemon PH = new Pokemon("Blue Ball", "ghost", 10, 20, true);
 Pokemon Enemy = new Pokemon("Yellow Ball", "water", 10, 21, false);
@@ -27,7 +28,7 @@ void setup()
 { 
   photo = loadImage("Player-123#.png");
   //imageMode(CENTER); 
-  parseFile(); 
+   loadGame(); 
   //size(500, 500);
   fullScreen();
   
@@ -36,6 +37,7 @@ void setup()
 // R and F are for testing for the battle bit 
 void keyPressed()
 {
+  random = random(10);
   if (key== 'w'   &&  playerY > 0 &&  map.returnRoute( currentMap)[playerY - 1][ playerX] != 3 && moveSpeed(timingMillis))
   {
     mapY--;
@@ -56,13 +58,13 @@ void keyPressed()
     mapX++;
     timingMillis = millis();
   }
-  if(key == 'r')
+  /*if(key == 'r')
   {
     if(!pokemonEncounter)
     {
       pokemonEncounter = true;
     }
-  }
+  }*/
   if(key == 'f')
   {
     if(pokemonEncounter)
@@ -117,6 +119,12 @@ void draw()
           fill(100, 200, 100);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
+         else if (keyPressed && map.returnRoute( currentMap)[playerY][playerX] == 1 && random <= 1)
+        {
+          pokemonEncounter = true;
+          fill(100, 200, 100);
+          rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        }
         else if (map.returnRoute( currentMap)[j+mapY][i+mapX] == 5)
         {
           fill(100, 300, 100);
@@ -132,20 +140,19 @@ void draw()
           rect(
           i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
         } 
-        else if (map.returnRoute( currentMap)[playerY][playerX] == 4)
+        else if (map.returnRoute( currentMap)[playerY][playerX] == 4 || map.returnRoute( currentMap)[playerY][playerX] >= 6 )
         {
           fill(300);
           rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
-          if (currentMap == 1)
-          {
-            mapX  = 0;
-            mapY = 12;
-          }
+          changeMap();
+         
         }
-        else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4)
+        else if(map.returnRoute( currentMap)[j+mapY][i+mapX] == 4  )
         {
         fill(300);
         rect(i*(((height+width)/2)/10), j*(((height+width)/2)/10), (width/9), (((height+width)/2)/10));
+        
+       
         }
         
         
@@ -197,3 +204,71 @@ boolean moveSpeed(int lastMove)
   else
     return false;
 }
+
+
+void changeMap()
+{
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 1)
+  {
+        mapX  = -2;
+    mapY = 11;
+    currentMap ++;
+
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 4 && currentMap == 2)
+  {
+    mapX  = 1;
+    mapY = 1;
+    currentMap ++;
+
+
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 2)
+  {
+   mapX  = 1;
+   mapY = -3;
+   currentMap --;
+
+   
+  }
+  
+  if (map.returnRoute( currentMap)[playerY][playerX]  == 6 && currentMap == 3)
+  {
+   mapX  = 14;
+   mapY = 11;
+   currentMap --;
+
+  } 
+}
+//////////////////////////////////////////////////////////////////////////////////////////////
+void loadGame() 
+{
+  
+  try
+  {
+    //use the loadStrings() method to pull the lines of your save file into a String array
+    String[] data= loadStrings("save.txt");
+   
+
+     playerX =Integer.parseInt(data[0]);
+     playerY =Integer.parseInt(data[1]);   
+     mapX =Integer.parseInt(data[2]);
+     mapY =Integer.parseInt(data[3]);
+     currentMap =Integer.parseInt(data[4]);
+
+  }
+  catch(Exception e)
+  {
+    println("SOMETHING WENT WRONG#2");
+   
+    //Loads default data
+     currentMap = 1;
+     mapX = 0;
+     mapY = 0;
+     playerX = 0;
+     playerY = 0;
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////
